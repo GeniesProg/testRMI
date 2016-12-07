@@ -16,11 +16,11 @@ public class ClientRMI {
      * @param args inutilisé
      */
     public static void main(String[] args) {
-	ArrayList<ISondage> so = null;
+	IArraySondage so = null;
 
 	// Récupération du sondage distant
 	try {
-	    so = (ArrayList<ISondage>)Naming.lookup("rmi://localhost/sondages");
+	    so = (IArraySondage)Naming.lookup("rmi://localhost/sondages");
 	} catch(NotBoundException e) {
 	    System.err.println("Pas possible d'accéder à l'objet distant : " + e);
 	    System.exit(-1);
@@ -32,14 +32,22 @@ public class ClientRMI {
 	    System.exit(-1);
 	}
 
-	for (ISondage sondage : so) {
+	ArrayList<ISondage> sondages = null;
+	try {
+		sondages = so.getSondages();
+	} catch (RemoteException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+
+	for (int j = 0 ; j < sondages.size(); j++) {
 		try {
-			System.out.println(sondage.getTitre());
+			System.out.println(sondages.get(j).getTitre());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
     }
 
+    }
 }

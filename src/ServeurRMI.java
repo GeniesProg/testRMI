@@ -43,7 +43,7 @@ public class ServeurRMI {
     	JSONObject objet = new JSONObject(json);
     	JSONArray tableau = objet.getJSONArray("sondages");
     	
-    	ArrayList<Sondage> sondages = new ArrayList<Sondage>();
+    	ArrayList<ISondage> sondages = new ArrayList<ISondage>();
     	
     	for(int i = 0; i < tableau.length(); i++) {
     	    JSONObject sondage = tableau.getJSONObject(i);
@@ -64,12 +64,13 @@ public class ServeurRMI {
     	    }
     	    
     	    Sondage s = new Sondage(sondage.getInt("id"), sondage.getString("titre"), tabQuestions);
-    	    sondages.add(s);
+    	    sondages.add((ISondage)s);
     	      	
     	
 		try {	   
-			
-			Naming.rebind("sondages", sondages);
+			ArraySondage as = new ArraySondage(sondages);
+			//Naming.rebind("sondages", sondages);
+			Naming.rebind("sondages", as);
 			
 		    
 		} catch(RemoteException e) {

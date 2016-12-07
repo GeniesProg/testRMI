@@ -57,21 +57,19 @@ class UserSurveyHandler implements HttpHandler {
     	    System.exit(-1);
     	}
 
-    	// Test des méthodes distantes    
     	try {
-    	    System.out.println("Personne : " + so.getId() + " " + so.getTitre());
-    	} catch(RemoteException e) {
-    	    System.err.println("Erreur lors de l'accès aux méthodes : " + e);
-    	    System.exit(-1);
-    	}
+			System.out.println("Personne : " + so.getId() + " " + so.getTitre());
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         
     	try {
 			reponse+="<p>"+ so.getId() + " " + so.getTitre()+"</p>";
 		} catch (RemoteException e1) {
-			System.err.println("Erreur lors de la formation de la r�ponse : " + e1);
-    	    System.exit(-1);
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-        //----------------------------------------------------//
         
         // Envoi de l'en-t�te Http
         try {
